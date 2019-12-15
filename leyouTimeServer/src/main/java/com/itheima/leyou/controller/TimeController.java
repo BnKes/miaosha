@@ -12,7 +12,7 @@ public class TimeController {
 
     @RequestMapping(value = "/getTime")
     public String getTime(){
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         return simpleDateFormat.format(new Date());
     }
 }
