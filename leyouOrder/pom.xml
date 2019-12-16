@@ -11,8 +11,8 @@
     <groupId>com.itheima</groupId>
     <artifactId>leyou</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>leyouStock</name>
-    <description>Storage for leyou</description>
+    <name>leyouOrder</name>
+    <description>leyouOrder project for Spring Boot</description>
 
     <properties>
         <java.version>1.8</java.version>
@@ -49,6 +49,28 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.session</groupId>
+            <artifactId>spring-session-data-redis</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.junit.vintage</groupId>
+                    <artifactId>junit-vintage-engine</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 

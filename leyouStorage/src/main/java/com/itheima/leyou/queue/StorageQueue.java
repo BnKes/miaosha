@@ -1,6 +1,7 @@
 package com.itheima.leyou.queue;
 
 import com.itheima.leyou.service.IStorageService;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +14,7 @@ public class StorageQueue {
     @Autowired
     private IStorageService iStorageService;
 
+    @RabbitListener(queues = "storage_queue")
     public void insertStorage(String msg){
 
         //1. 接收消息并输出

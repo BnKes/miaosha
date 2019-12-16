@@ -9,11 +9,10 @@ import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
 @EnableEurekaClient
-public class LeyouApplication {
+public class LeyouOrderApplication {
 
     public static void main(String[] args) {
-
-        SpringApplication.run(LeyouApplication.class, args);
+        SpringApplication.run(LeyouOrderApplication.class, args);
     }
 
     @Bean
@@ -22,4 +21,3 @@ public class LeyouApplication {
         return new RestTemplate();
     }
 }
-

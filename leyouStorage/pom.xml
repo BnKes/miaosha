@@ -11,7 +11,7 @@
     <groupId>com.itheima</groupId>
     <artifactId>leyou</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>leyou</name>
+    <name>leyouStorage</name>
     <description>Storage for Spring Boot</description>
 
     <properties>

@@ -1,6 +1,5 @@
 package com.itheima.leyou.service;
 
-import javax.transaction.Transactional;
 import java.util.Map;
 
 public interface IStockService {
