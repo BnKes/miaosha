@@ -19,8 +19,8 @@ public class UserController {
     @Autowired
     private IUserService iUserService;
 
-    @RequestMapping(value = "/login/{username}/{password}", method = RequestMethod.POST)
-    public Map<String, Object> login(@PathVariable("username") String username, @PathVariable("password") String password, HttpServletRequest httpServletRequest){
+    @RequestMapping(value = "/login")
+    public Map<String, Object> login(String username, String password, HttpServletRequest httpServletRequest){
         Map<String, Object> resultMap = new HashMap<String, Object>();
 
         //1、取会员

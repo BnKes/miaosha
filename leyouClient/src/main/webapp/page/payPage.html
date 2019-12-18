@@ -44,8 +44,12 @@
                 type:'post',
                 url:"/leyouOrder/payOrder/"+order_id+"/"+sku_id,
                 success:function(data){
-                    alert("支付成功！");
-                    location.href="stockListPage.html";
+                    if(data.result){
+                        alert("支付成功！");
+                        location.href="stockListPage.html";
+                    }else {
+                        alert("支付失败！");
+                    }
                 },error:function(){
                     alert("请求出错，请稍后重试");
                 }

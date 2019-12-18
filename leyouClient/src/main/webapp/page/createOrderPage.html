@@ -54,7 +54,7 @@
             $.ajax({
                 type:'post',
                 timeout : 10000, //超时时间设置，单位毫秒
-                url:"/leyouOrder/createOrder/"+JSON.stringify({"sku_id":sku_id}),
+                url:"/leyouOrder/createOrder/"+sku_id,
                 success:function(data){
                     if (data.result){
                         //跳转支付页面

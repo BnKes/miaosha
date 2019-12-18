@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -31,5 +33,20 @@ public class OrderDaoImpl implements IOrderDao {
         }
         return result;
 
+    }
+
+    @Override
+    public ArrayList<Map<String, Object>> getOrder(String order_id) {
+        String sql = "select d.sku_id, m.order_id, d.price from tb_order m inner join tb_order_detail d on m.order_id = d.order_id where m.order_id = ?";
+
+        ArrayList<Map<String, Object>> order = (ArrayList<Map<String, Object>>) jdbcTemplate.queryForList(sql, order_id);
+        return order;
+    }
+
+    @Override
+    public boolean updateOrderStatus(String order_id) {
+        String sql = "update tb_order set status = 2 where order_id = ?";
+        int count = jdbcTemplate.update(sql, order_id);
+        return count==1;
     }
 }

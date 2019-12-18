@@ -12,6 +12,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -45,7 +46,9 @@ public class OrderServiceImpl implements IOrderService {
         String order_id = String.valueOf(System.currentTimeMillis());
 
         //2.从Redis中取存入的活动政策limitpolicy
-        String policy = stringRedisTemplate.opsForValue().get("LIMIT_POLICY_" + sku_id);
+        String key = "LIMIT_POLICY_"+sku_id;
+        String policy = stringRedisTemplate.opsForValue().get(key);
+//        String policy = stringRedisTemplate.opsForValue().get("LIMIT_POLICY_" + sku_id);
 
         if(policy!=null && !policy.equals("")){
             Map<String,Object> policyMap = JSONObject.parseObject(policy, Map.class);
@@ -117,7 +120,7 @@ public class OrderServiceImpl implements IOrderService {
         }else {
             //policy为空
             resultMap.put("result", false);
-            resultMap.put("msg", "活动已经过期！");
+            resultMap.put("msg", "Redis里面无LIMIT_POLICY！");
             return resultMap;
         }
 
@@ -128,6 +131,20 @@ public class OrderServiceImpl implements IOrderService {
 
         return resultMap;
     }
+
+    @Override
+    public Map<String, Object> getOrder(String order_id) {
+        Map<String, Object> resultMap = new HashMap<>();
+        if(order_id==null || order_id.equals("")){
+            resultMap.put("result", false);
+            resultMap.put("msg", "参数传入有误！");
+            return resultMap;
+        }
+        ArrayList<Map<String, Object>> list = iOrderDao.getOrder(order_id);
+        resultMap.put("order",list);
+        return resultMap;
+    }
+
 
     @Override
     public Map<String, Object> insertOrder(Map<String,Object> orderInfo) {
@@ -147,6 +164,35 @@ public class OrderServiceImpl implements IOrderService {
 
         resultMap.put("result", true);
         resultMap.put("msg", "");
+        return resultMap;
+    }
+
+    @Override
+    public Map<String, Object> payOrder(String order_id, String sku_id) {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        if (order_id==null||order_id.equals("")){
+            resultMap.put("result", false);
+            resultMap.put("msg", "订单有误！");
+            return resultMap;
+        }
+        boolean result = iOrderDao.updateOrderStatus(order_id);
+
+        if(!result){
+            resultMap.put("result", false);
+            resultMap.put("msg", "更新状态失败！");
+            return resultMap;
+        }
+
+        try {
+            amqpTemplate.convertAndSend("storage_queue",sku_id);
+
+        }catch (Exception e){
+            resultMap.put("result", false);
+            resultMap.put("msg", "写入队列失败！");
+            return resultMap;
+        }
+        resultMap.put("result", true);
+        resultMap.put("msg", "支付成功");
         return resultMap;
     }
 }

@@ -22,6 +22,8 @@ public class StorageQueue {
 
         //2.调用库存写入方法
         Map<String, Object> resultMap = new HashMap<String,Object>();
+
+        //每次支付完减1
         resultMap = iStorageService.insertStorage(msg, 0, 1);
 
         //3. 如果写入失败，输出失败消息

@@ -19,4 +19,5 @@ public class StorageController {
 
         return iStorageService.insertStorage(sku_id, inquanty, outquanty);
     }
+
 }
