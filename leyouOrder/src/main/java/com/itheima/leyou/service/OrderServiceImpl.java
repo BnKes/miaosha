@@ -3,7 +3,6 @@ package com.itheima.leyou.service;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.itheima.leyou.dao.IOrderDao;
-import org.omg.CORBA.OBJ_ADAPTER;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -12,10 +11,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class OrderServiceImpl implements IOrderService {
@@ -43,7 +39,8 @@ public class OrderServiceImpl implements IOrderService {
         }
 
         //订单id取当前的时间
-        String order_id = String.valueOf(System.currentTimeMillis());
+        String order_id = String.valueOf((int)(Math.random()*10000+1))+String.valueOf((int)(Math.random()*10000+1))+String.valueOf((int)(Math.random()*10000+1))+String.valueOf((int)(Math.random()*10000+1));
+//        String order_id = UUID.randomUUID().toString().replace("-", "").substring(6);
 
         //2.从Redis中取存入的活动政策limitpolicy
         String key = "LIMIT_POLICY_"+sku_id;

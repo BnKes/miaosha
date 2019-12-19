@@ -27,19 +27,20 @@ public class OrderController {
     @ResponseBody
     @RequestMapping("/createOrder/{sku_id}")
     public Map<String,Object> createOrder(@PathVariable("sku_id") String sku_id, HttpServletRequest request){
-        Map<String, Object> resultMap = new HashMap<>();
-        HttpSession session = request.getSession();
-        //从session中取登录用户的信息
-        Object userObj = session.getAttribute("user");
-
-        if(userObj==null){
-            resultMap.put("result", false);
-            resultMap.put("msg", "会员没有登录不能购买！");
-            return resultMap;
-        }
-        Map<String,Object> userMap = JSONObject.parseObject(userObj.toString(),Map.class);
-
-        return iOrderService.createOrder(sku_id, userMap.get("user_id").toString());
+//        Map<String, Object> resultMap = new HashMap<>();
+//        HttpSession session = request.getSession();
+//        //从session中取登录用户的信息
+//        Object userObj = session.getAttribute("user");
+//
+//        if(userObj==null){
+//            resultMap.put("result", false);
+//            resultMap.put("msg", "会员没有登录不能购买！");
+//            return resultMap;
+//        }
+//        Map<String,Object> userMap = JSONObject.parseObject(userObj.toString(),Map.class);
+//
+//        return iOrderService.createOrder(sku_id, userMap.get("user_id").toString());
+        return iOrderService.createOrder(sku_id, "31");
 
 
     }
@@ -63,8 +64,8 @@ public class OrderController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/payOrder/{order_id}/{sku_id}")
-    public Object payOrder(@PathVariable("order_id") String order_id, @PathVariable("sku_id") String sku_id){
+    @RequestMapping(value = "/payOrder")
+    public Object payOrder(String order_id, String sku_id){
         //正常情况下在这里会调用支付接口，我们这里模拟支付已经返回正常数据
         Data data = new Data();
         boolean isPay = true;

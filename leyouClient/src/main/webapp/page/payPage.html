@@ -42,7 +42,11 @@
             var sku_id = $("#sku_id").html();
             $.ajax({
                 type:'post',
-                url:"/leyouOrder/payOrder/"+order_id+"/"+sku_id,
+                data:{
+                    "order_id" : order_id,
+                    "sku_id" : sku_id
+                },
+                url:"/leyouOrder/payOrder",
                 success:function(data){
                     if(data.result){
                         alert("支付成功！");
